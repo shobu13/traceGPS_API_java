@@ -91,9 +91,9 @@ public class UtilisateurTest {
 
     @Test
     public void testSetNumTel() {
-        String numTel = "11.22.33.44.56";
+        String numTel = "1122334456";
         utilisateur1.setNumTel(numTel);
-        assertEquals(numTel, utilisateur1.getNumTel());
+        assertEquals(Outils.corrigerTelephone(numTel), utilisateur1.getNumTel());
     }
 
     @Test
