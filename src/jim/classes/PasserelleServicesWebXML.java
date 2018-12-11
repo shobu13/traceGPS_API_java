@@ -246,7 +246,6 @@ public class PasserelleServicesWebXML extends PasserelleXML {
         }
     }
 
-<<<<<<< Updated upstream
 	// Méthode statique pour demander un nouveau mot de passe (service DemanderMdp.php)
 	// La méthode doit recevoir 1 paramètre :
 	//    pseudo : le pseudo de l'utilisateur
@@ -293,11 +292,6 @@ public class PasserelleServicesWebXML extends PasserelleXML {
 			
 			// création d'un flux en lecture (InputStream) à partir du service
 			InputStream unFluxEnLecture = getFluxEnLecture(urlDuServiceWeb);
-=======
-    // -------------------------------------------------------------------------------------------------
-    // --------------------------------- méthodes restant à développer ---------------------------------
-    // -------------------------------------------------------------------------------------------------
->>>>>>> Stashed changes
 
     // Méthode statique pour demander un nouveau mot de passe (service DemanderMdp.php)
     // La méthode doit recevoir 1 paramètre :
@@ -445,7 +439,6 @@ public class PasserelleServicesWebXML extends PasserelleXML {
         }
     }
 
-<<<<<<< Updated upstream
 	// Méthode statique pour demander une autorisation (service DemanderUneAutorisation.php)
 	// La méthode doit recevoir 5 paramètres :
 	//   pseudo : le pseudo de l'utilisateur qui fait appel au service web
@@ -556,123 +549,6 @@ public class PasserelleServicesWebXML extends PasserelleXML {
 	{
 		return "";				// METHODE A CREER ET TESTER
 	}
-=======
-    // Méthode statique pour demander une autorisation (service DemanderUneAutorisation.php)
-    // La méthode doit recevoir 5 paramètres :
-    //   pseudo : le pseudo de l'utilisateur qui fait appel au service web
-    //   mdpSha1 : le mot de passe hashé en sha1
-    //   pseudoDestinataire : le pseudo de l'utilisateur à qui on demande l'autorisation
-    //   texteMessage : le texte d'un message accompagnant la demande
-    //   nomPrenom : le nom et le prénom du demandeur
-    public static String demanderUneAutorisation(String pseudo, String mdpSha1, String pseudoDestinataire, String texteMessage, String nomPrenom) {
-        return "";                // METHODE A CREER ET TESTER
-    }
-
-    // Méthode statique pour retirer une autorisation (service RetirerUneAutorisation.php)
-    // La méthode doit recevoir 4 paramètres :
-    //   pseudo : le pseudo de l'utilisateur qui fait appel au service web
-    //   mdpSha1 : le mot de passe hashé en sha1
-    //   pseudoARetirer : le pseudo de l'utilisateur à qui on veut retirer l'autorisation
-    //   texteMessage : le texte d'un message pour un éventuel envoi de courriel
-    public static String retirerUneAutorisation(String pseudo, String mdpSha1, String pseudoARetirer, String texteMessage) {
-        return "";                // METHODE A CREER ET TESTER
-    }
-
-    // Méhode statique pour envoyer la position de l'utilisateur (service EnvoyerPosition.php)
-    // La méthode doit recevoir 3 paramètres :
-    //    pseudo : le pseudo de l'utilisateur qui fait appel au service web
-    //    mdpSha1 : le mot de passe hashé en sha1
-    //    lePoint : un objet PointDeTrace (vide) qui permettra de récupérer le numéro attribué à partir des données fournies par le service web
-    public static String envoyerPosition(String pseudo, String mdpSha1, PointDeTrace lePoint) {
-        return "";                // METHODE A CREER ET TESTER
-    }
-
-    // Méthode statique pour obtenir un parcours et la liste de ses points (service GetUnParcoursEtSesPoints.php)
-    // La méthode doit recevoir 4 paramètres :
-    //    pseudo : le pseudo de l'utilisateur qui fait appel au service web
-    //    mdpSha1 : le mot de passe hashé en sha1
-    //    idTrace : l'id de la trace à consulter
-    //    laTrace : objet Trace (vide) à remplir à partir des données fournies par le service web
-    public static String getUnParcoursEtSesPoints(String pseudo, String mdpSha1, int idTrace, Trace laTrace) {
-        String reponse = "";
-        try {    // création d'un nouveau document XML à partir de l'URL du service web et des paramètres
-            String urlDuServiceWeb = _adresseHebergeur + _urlGetUnParcoursEtSesPoints;
-            urlDuServiceWeb += "?pseudo=" + pseudo;
-            urlDuServiceWeb += "&mdpSha1=" + mdpSha1;
-            urlDuServiceWeb += "&idTrace=" + idTrace;
-
-            // création d'un flux en lecture (InputStream) à partir du service
-            InputStream unFluxEnLecture = getFluxEnLecture(urlDuServiceWeb);
-
-            // création d'un objet org.w3c.dom.Document à partir du flux ; il servira à parcourir le flux XML
-            Document leDocument = getDocumentXML(unFluxEnLecture);
-
-            // parsing du flux XML
-            Element racine = (Element) leDocument.getElementsByTagName("data").item(0);
-            reponse = racine.getElementsByTagName("reponse").item(0).getTextContent();
-
-            NodeList listeNoeudsTrace = leDocument.getElementsByTagName("trace");
-
-            // parcours de la liste des noeuds <utilisateur> et ajout dans la collection lesUtilisateurs
-            Element courant = (Element) listeNoeudsTrace.item(0);
-
-            // lecture des balises intérieures
-            int unId = Integer.parseInt(courant.getElementsByTagName("id").item(0).getTextContent());
-            Date dateHeureDebut = courant.getElementsByTagName("dateHeureDebut").item(0).getTextContent();
-            Date dateHeureFin = Outils.convertirEnDate(courant.getElementsByTagName("dateHeureFin").item(0).getTextContent(), formatDateUS);
-            boolean terminee = Boolean.parseBoolean(courant.getElementsByTagName("terminee").item(0).getTextContent());
-            int idUtilisateur = Integer.parseInt(courant.getElementsByTagName("idUtilisateur").item(0).getTextContent());
-
-            laTrace.setId(unId);
-//            laTrace.setDateHeureDebut(dateHeureDebut);
-            laTrace.setDateHeureFin(dateHeureFin);
-            laTrace.setTerminee(terminee);
-            laTrace.setIdUtilisateur(idUtilisateur);
-
-            // retour de la réponse du service web
-            return reponse;
-        } catch (ParseException e) {
-            return e.getMessage();
-        }
-    }
-
-    // Méthode statique pour obtenir la liste des parcours d'un utilisateur (service GetLesParcoursDunUtilisateur.php)
-    // La méthode doit recevoir 4 paramètres :
-    //    pseudo : le pseudo de l'utilisateur qui fait appel au service web
-    //    mdpSha1 : le mot de passe hashé en sha1
-    //    idUtilisateur : l'id de l'utilisateur dont on veut la liste des parcours
-    //    lesTraces : collection (vide) à remplir à partir des données fournies par le service web
-    public static String getLesParcoursDunUtilisateur(String pseudo, String mdpSha1, String pseudoConsulte, ArrayList<Trace> lesTraces) {
-        return "";                // METHODE A CREER ET TESTER
-    }
-
-    // Méthode statique pour supprimer un parcours (service SupprimerUnParcours.php)
-    // La méthode doit recevoir 3 paramètres :
-    //   pseudo : le pseudo de l'utilisateur qui fait appel au service web
-    //   mdpSha1 : le mot de passe hashé en sha1
-    //   idTrace : l'id de la trace à supprimer
-    public static String supprimerUnParcours(String pseudo, String mdpSha1, int idTrace) {
-        return "";                // METHODE A CREER ET TESTER
-    }
-
-    // Méthode statique pour démarrer l'enregistrement d'un parcours (service DemarrerEnregistrementParcours.php)
-    // La méthode doit recevoir 3 paramètres :
-    //    pseudo : le pseudo de l'utilisateur qui fait appel au service web
-    //    mdpSha1 : le mot de passe hashé en sha1
-    //    laTrace : un objet Trace (vide) à remplir à partir des données fournies par le service web
-    public static String demarrerEnregistrementParcours(String pseudo, String mdpSha1, Trace laTrace) {
-        return "";                // METHODE A CREER ET TESTER
-    }
-
-    // Méthode statique pour terminer l'enregistrement d'un parcours (service ArreterEnregistrementParcours.php)
-    // La méthode doit recevoir 3 paramètres :
-    //    pseudo : le pseudo de l'utilisateur qui fait appel au service web
-    //    mdpSha1 : le mot de passe hashé en sha1
-    //    idTrace : l'id de la trace à terminer
-    public static String arreterEnregistrementParcours(String pseudo, String mdpSha1, int idTrace) {
-        return "";                // METHODE A CREER ET TESTER
-    }
->>>>>>> Stashed changes
 
     // Méthode statique pour retirer une autorisation (service RetirerUneAutorisation.php)
     // La méthode doit recevoir 4 paramètres :
