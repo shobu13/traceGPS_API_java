@@ -8,6 +8,7 @@
 
 package jim.classes;
 
+import java.lang.reflect.Executable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -477,7 +478,7 @@ public class PasserelleServicesWebXML extends PasserelleXML {
     //    idTrace : l'id de la trace à consulter
     //    laTrace : objet Trace (vide) à remplir à partir des données fournies par le service web
     public static String getUnParcoursEtSesPoints(String pseudo, String mdpSha1, int idTrace, Trace laTrace) {
-        String reponse = "";
+        String reponse;
         try {    // création d'un nouveau document XML à partir de l'URL du service web et des paramètres
             String urlDuServiceWeb = _adresseHebergeur + _urlGetUnParcoursEtSesPoints;
             urlDuServiceWeb += "?pseudo=" + pseudo;
@@ -547,7 +548,42 @@ public class PasserelleServicesWebXML extends PasserelleXML {
     //    idUtilisateur : l'id de l'utilisateur dont on veut la liste des parcours
     //    lesTraces : collection (vide) à remplir à partir des données fournies par le service web
     public static String getLesParcoursDunUtilisateur(String pseudo, String mdpSha1, String pseudoConsulte, ArrayList<Trace> lesTraces) {
-        return "";                // METHODE A CREER ET TESTER
+        String reponse;
+        try {
+            String urlDuServiceWeb = _adresseHebergeur + _urlGetLesParcoursDunUtilisateur;
+            urlDuServiceWeb += "?pseudo=" + pseudo;
+            urlDuServiceWeb += "&mdpSha1=" + mdpSha1;
+            urlDuServiceWeb += "&pseudoConsulte=" + pseudoConsulte;
+
+            InputStream unFluxEnLecture = getFluxEnLecture(urlDuServiceWeb);
+
+            Document leDocument = getDocumentXML(unFluxEnLecture);
+
+            Element racine = (Element) leDocument.getElementsByTagName("data").item(0);
+            reponse = racine.getElementsByTagName("reponse").item(0).getTextContent();
+
+            NodeList listeNoeudsTraces = leDocument.getElementsByTagName("trace");
+
+            for (int i = 0; i <= listeNoeudsTraces.getLength() - 1; i++) {
+                Element courantTrace = (Element) listeNoeudsTraces.item(i);
+
+                // lecture des balises intérieures
+                int unId = Integer.parseInt(courantTrace.getElementsByTagName("id").item(0).getTextContent());
+                Date dateHeureDebut = Outils.convertirEnDate(courantTrace.getElementsByTagName("dateHeureDebut").item(0).getTextContent(), formatDateUS);
+                Date dateHeureFin = null;
+                boolean terminee = Boolean.parseBoolean(courantTrace.getElementsByTagName("terminee").item(0).getTextContent());
+                int idUtilisateur = Integer.parseInt(courantTrace.getElementsByTagName("idUtilisateur").item(0).getTextContent());
+                if (terminee) {
+                    dateHeureFin = Outils.convertirEnDate(courantTrace.getElementsByTagName("dateHeureFin").item(0).getTextContent(), formatDateUS);
+                }
+
+                lesTraces.add(new Trace(unId, dateHeureDebut, dateHeureFin, terminee, idUtilisateur));
+            }
+
+            return reponse;
+        } catch (ParseException ex) {
+            return ex.getMessage();
+        }
     }
 
     // Méthode statique pour supprimer un parcours (service SupprimerUnParcours.php)
@@ -556,7 +592,26 @@ public class PasserelleServicesWebXML extends PasserelleXML {
     //   mdpSha1 : le mot de passe hashé en sha1
     //   idTrace : l'id de la trace à supprimer
     public static String supprimerUnParcours(String pseudo, String mdpSha1, int idTrace) {
-        return "";                // METHODE A CREER ET TESTER
+        String reponse;
+        try {
+            String urlDuServiceWeb = _adresseHebergeur + _urlSupprimerUnParcours;
+            urlDuServiceWeb += "?pseudo=" + pseudo;
+            urlDuServiceWeb += "&mdpSha1=" + mdpSha1;
+            urlDuServiceWeb += "&idTrace=" + idTrace;
+
+            InputStream unFluxEnLecture = getFluxEnLecture(urlDuServiceWeb);
+
+            Document leDocument = getDocumentXML(unFluxEnLecture);
+
+            Element racine = (Element) leDocument.getElementsByTagName("data").item(0);
+            reponse = racine.getElementsByTagName("reponse").item(0).getTextContent();
+
+            return reponse;
+        } catch (Exception ex) {
+            return ex.getMessage();
+        }
+
+
     }
 
     // Méthode statique pour démarrer l'enregistrement d'un parcours (service DemarrerEnregistrementParcours.php)
@@ -565,7 +620,41 @@ public class PasserelleServicesWebXML extends PasserelleXML {
     //    mdpSha1 : le mot de passe hashé en sha1
     //    laTrace : un objet Trace (vide) à remplir à partir des données fournies par le service web
     public static String demarrerEnregistrementParcours(String pseudo, String mdpSha1, Trace laTrace) {
-        return "";                // METHODE A CREER ET TESTER
+        String reponse;
+        try {
+            String urlDuServiceWeb = _adresseHebergeur + _urlDemarrerEnregistrementParcours;
+            urlDuServiceWeb += "?pseudo=" + pseudo;
+            urlDuServiceWeb += "&mdpSha1=" + mdpSha1;
+
+            InputStream unFluxEnLecture = getFluxEnLecture(urlDuServiceWeb);
+
+            Document leDocument = getDocumentXML(unFluxEnLecture);
+
+            Element racine = (Element) leDocument.getElementsByTagName("data").item(0);
+            reponse = racine.getElementsByTagName("reponse").item(0).getTextContent();
+
+            NodeList listeNoeudsTraces = leDocument.getElementsByTagName("trace");
+
+            for (int i = 0; i <= listeNoeudsTraces.getLength() - 1; i++) {
+                Element courantTrace = (Element) listeNoeudsTraces.item(i);
+
+                // lecture des balises intérieures
+                int unId = Integer.parseInt(courantTrace.getElementsByTagName("id").item(0).getTextContent());
+                Date dateHeureDebut = Outils.convertirEnDate(courantTrace.getElementsByTagName("dateHeureDebut").item(0).getTextContent(), formatDateUS);
+                Date dateHeureFin = null;
+                boolean terminee = Boolean.parseBoolean(courantTrace.getElementsByTagName("terminee").item(0).getTextContent());
+                int idUtilisateur = Integer.parseInt(courantTrace.getElementsByTagName("idUtilisateur").item(0).getTextContent());
+                if (terminee) {
+                    dateHeureFin = Outils.convertirEnDate(courantTrace.getElementsByTagName("dateHeureFin").item(0).getTextContent(), formatDateUS);
+                }
+
+                laTrace = new Trace(unId, dateHeureDebut, dateHeureFin, terminee, idUtilisateur);
+            }
+
+            return reponse;
+        } catch (ParseException ex) {
+            return ex.getMessage();
+        }
     }
 
     // Méthode statique pour terminer l'enregistrement d'un parcours (service ArreterEnregistrementParcours.php)

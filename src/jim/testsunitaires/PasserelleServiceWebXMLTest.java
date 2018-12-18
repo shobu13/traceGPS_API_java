@@ -161,7 +161,7 @@ Date laDate = Outils.convertirEnDateHeure("24/01/2018 13:42:21");
 	public void testDemarrerEnregistrementParcours() {
 		Trace laTrace = new Trace();
 		String msg = PasserelleServicesWebXML.demarrerEnregistrementParcours("europa", Outils.sha1("mdputilisateurrrrrr"), laTrace);
-		assertEquals("Erreur : authentification incorrecte.", msg);
+		assertEquals("Erreur : authentification incorrecte !", msg);
 		
 		laTrace = new Trace();
 		msg = PasserelleServicesWebXML.demarrerEnregistrementParcours("europa", Outils.sha1("mdputilisateur"), laTrace);
@@ -193,15 +193,15 @@ Date laDate = Outils.convertirEnDateHeure("24/01/2018 13:42:21");
 	@Test
 	public void testSupprimerUnUnParcours() {
 		String msg = PasserelleServicesWebXML.supprimerUnParcours("europa", Outils.sha1("mdputilisateurrrrrr"), 10);
-		assertEquals("Erreur : authentification incorrecte.", msg);
+		assertEquals("Erreur : authentification incorrecte !", msg);
 		
 		msg = PasserelleServicesWebXML.supprimerUnParcours("europa", Outils.sha1("mdputilisateur"), 100);
-		assertEquals("Erreur : parcours inexistant.", msg);
+		assertEquals("Erreur : parcours inexistant !", msg);
 		
 		msg = PasserelleServicesWebXML.supprimerUnParcours("europa", Outils.sha1("mdputilisateur"), 22);
-		assertEquals("Erreur : vous n'êtes pas le propriétaire de ce parcours.", msg);	
+		assertEquals("Erreur : vous n'êtes pas le propriétaire du parcours !", msg);
 		
-		msg = PasserelleServicesWebXML.supprimerUnParcours("europa", Outils.sha1("mdputilisateur"), 30);
+		msg = PasserelleServicesWebXML.supprimerUnParcours("europa", Outils.sha1("mdputilisateur"), 4);
 		assertEquals("Parcours supprimé.", msg);	
 
 	}

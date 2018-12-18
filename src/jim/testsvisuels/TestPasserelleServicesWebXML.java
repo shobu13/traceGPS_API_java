@@ -49,17 +49,29 @@ public class TestPasserelleServicesWebXML {
         //</editor-fold>
 
 
+        //<editor-fold desc="test getLesParcoursDunUtilisateur">
         // test visuel de la méthode getLesParcoursDunUtilisateur
+        /*ArrayList<Trace> lesTraces = new ArrayList<Trace>();
+        msg = PasserelleServicesWebXML.getLesParcoursDunUtilisateur("europa", Outils.sha1("mdputilisateur"), "callisto", lesTraces);
+        // affichage de la réponse
+        System.out.println(msg);
+        // affichage du nombre de traces
+        System.out.println("Nombre de traces : " + lesTraces.size());
+        // affichage de tous les utilisateurs
+        for (Trace uneTrace : lesTraces) {
+            System.out.println(uneTrace.toString());
+        }*/
+        //</editor-fold>
 
 
         //<editor-fold desc="test getUnParcoursEtSesPoints">
-        // test visuel de la méthode getUnParcoursEtSesPoints
+        /*// test visuel de la méthode getUnParcoursEtSesPoints
         Trace laTrace = new Trace();
         msg = PasserelleServicesWebXML.getUnParcoursEtSesPoints("europa", Outils.sha1("mdputilisateur"), 2, laTrace);
         // affichage de la réponse
         System.out.println(msg);
         // affichage de la trace
-        System.out.println(laTrace.toString());
+        System.out.println(laTrace.toString());*/
         //</editor-fold>
 
     } // fin Main
