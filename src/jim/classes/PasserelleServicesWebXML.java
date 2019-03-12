@@ -458,8 +458,34 @@ public class PasserelleServicesWebXML extends PasserelleXML {
     //   mdpSha1 : le mot de passe hashé en sha1
     //   pseudoARetirer : le pseudo de l'utilisateur à qui on veut retirer l'autorisation
     //   texteMessage : le texte d'un message pour un éventuel envoi de courriel
-    public static String retirerUneAutorisation(String pseudo, String mdpSha1, String pseudoARetirer, String texteMessage) {
-        return "";                // METHODE A CREER ET TESTER
+    public static String retirerUneAutorisation(String pseudo, String mdpSha1, String pseudoARetirer, String texteMessage) 
+    {
+    	String reponse = "";
+    	try
+    	{	// création d'un nouveau document XML à partir de l'URL du service web et des paramètres
+    		String urlDuServiceWeb = _adresseHebergeur + _urlRetirerUneAutorisation;
+            urlDuServiceWeb += "?pseudo=" + pseudo;
+            urlDuServiceWeb += "&mdpSha1=" + mdpSha1;
+            urlDuServiceWeb += "&pseudoARetirer=" + pseudoARetirer;
+            urlDuServiceWeb += "&texteMessage=" + texteMessage;
+
+			// création d'un flux en lecture (InputStream) à partir du fichier
+			InputStream unFluxEnLecture = getFluxEnLecture(urlDuServiceWeb);
+			
+			// création d'un objet org.w3c.dom.Document à partir du flux ; il servira à parcourir le flux XML
+			Document leDocument = getDocumentXML(unFluxEnLecture);
+    		
+    		// parsing du flux XML
+    		Element racine = (Element) leDocument.getElementsByTagName("data").item(0);
+    		reponse = racine.getElementsByTagName("reponse").item(0).getTextContent();
+    		
+    		// retour de la réponse du service web
+    		return reponse;
+    	}
+    	catch (Exception ex)
+    	{	String msg = "Erreur : " + ex.getMessage();
+			return msg;
+		}
     }
 
     // Méhode statique pour envoyer la position de l'utilisateur (service EnvoyerPosition.php)
@@ -467,8 +493,54 @@ public class PasserelleServicesWebXML extends PasserelleXML {
     //    pseudo : le pseudo de l'utilisateur qui fait appel au service web
     //    mdpSha1 : le mot de passe hashé en sha1
     //    lePoint : un objet PointDeTrace (vide) qui permettra de récupérer le numéro attribué à partir des données fournies par le service web
-    public static String envoyerPosition(String pseudo, String mdpSha1, PointDeTrace lePoint) {
-        return "";                // METHODE A CREER ET TESTER
+    public static String envoyerPosition(String pseudo, String mdpSha1, PointDeTrace lePoint) 
+    {
+    	String reponse = "";
+    	try
+    	{	// création d'un nouveau document XML à partir de l'URL du service web et des paramètres
+    		String urlDuServiceWeb = _adresseHebergeur + _urlEnvoyerPosition;
+            urlDuServiceWeb += "?pseudo=" + pseudo;
+            urlDuServiceWeb += "&mdpSha1=" + mdpSha1;
+            urlDuServiceWeb += "&idTrace=" + lePoint.getIdTrace();
+            urlDuServiceWeb += "&dateHeure=" + Outils.formaterDateHeureUS(lePoint.getDateHeure()).replace(" ", "%20");
+            urlDuServiceWeb += "&latitude=" + lePoint.getLatitude();
+            urlDuServiceWeb += "&longitude=" + lePoint.getLongitude();
+            urlDuServiceWeb += "&altitude=" + lePoint.getAltitude();
+            urlDuServiceWeb += "&rythmeCardio=" + lePoint.getRythmeCardio();
+            
+			// création d'un flux en lecture (InputStream) à partir du fichier
+			InputStream unFluxEnLecture = getFluxEnLecture(urlDuServiceWeb);
+			
+			// création d'un objet org.w3c.dom.Document à partir du flux ; il servira à parcourir le flux XML
+			Document leDocument = getDocumentXML(unFluxEnLecture);
+    		
+    		// parsing du flux XML
+    		Element racine = (Element) leDocument.getElementsByTagName("data").item(0);
+    		reponse = racine.getElementsByTagName("reponse").item(0).getTextContent();
+    		
+			NodeList listeNoeuds = racine.getElementsByTagName("id");
+			/* Exemple de données obtenues :
+			    <donnees>
+			      <id>1</id>
+			    </donnees>
+			 */
+    		
+			if (listeNoeuds.getLength() > 0)
+			{	// récupération du premier et seul élément de la liste
+				Element courant = (Element) listeNoeuds.item(0);
+				// lecture de la balise
+				int id = Integer.parseInt(courant.getTextContent());
+				// mise à jour de l'objet lePoint passé en paramètre
+				lePoint.setId(id);		
+			}
+			
+    		// retour de la réponse du service web
+    		return reponse;
+    	}
+    	catch (Exception ex)
+    	{	String msg = "Erreur : " + ex.getMessage();
+			return msg;
+		}
     }
 
     // Méthode statique pour obtenir un parcours et la liste de ses points (service GetUnParcoursEtSesPoints.php)
