@@ -2,35 +2,35 @@ package jim.classes;
 
 import java.util.Date;
 
-// Cette classe repr√©sente un point de passage de la trace.
-// Elle h√©rite de la classe Point.
+// Cette classe reprÈsente un point de passage de la trace.
+// Elle hÈrite de la classe Point.
 // Elle y ajoute :
 // - l'id de la trace
-// - l'id du point (relatif √† la trace)
+// - l'id du point (relatif ‡ la trace)
 // - l'heure de passage au point
 // - le rythme cardiaque
-// - le temps cumul√© depuis le d√©part (en secondes)
-// - la distance cumul√©e depuis le d√©part (en Km)
-// - la vitesse instantan√©e, calcul√©e entre le point pr√©c√©dent et le point actuel (en Km/h)
-// Derni√®re mise √† jour : 26/3/2018 par Jim
+// - le temps cumulÈ depuis le dÈpart (en secondes)
+// - la distance cumulÈe depuis le dÈpart (en Km)
+// - la vitesse instantanÈe, calculÈe entre le point prÈcÈdent et le point actuel (en Km/h)
+// DerniËre mise ‡ jour : 22/1/2018 par Jim
 
 public class PointDeTrace extends Point {
 
-	// attributs priv√©s ---------------------------------------------------------------------------
+	// attributs privÈs ---------------------------------------------------------------------------
 
 	private int _idTrace;				// l'identifiant de la trace
     private int _id;					// l'identifiant relatif du point dans la trace
 	private Date _dateHeure;			// l'heure de passage au point (utilise un objet java.util.Date)
     private int _rythmeCardio;			// le rythme cardiaque au point
-    private long _tempsCumule;			// le temps cumul√© depuis le d√©part (en secondes)
-    private double _distanceCumulee;	// la distance cumul√©e depuis le d√©part (en Km)
-    private double _vitesse;			// la vitesse instantan√©e, calcul√©e entre le point pr√©c√©dent et le point actuel (en Km/h)	
+    private long _tempsCumule;			// le temps cumulÈ depuis le dÈpart (en secondes)
+    private double _distanceCumulee;	// la distance cumulÈe depuis le dÈpart (en Km)
+    private double _vitesse;			// la vitesse instantanÈe, calculÈe entre le point prÈcÈdent et le point actuel (en Km/h)	
 	
 	// Constructeurs ------------------------------------------------------------------------------
 
-    // Constructeur sans param√®tre
+    // Constructeur sans paramËtre
 	public PointDeTrace() {
-		// appelle le constructeur de la classe m√®re
+		// appelle le constructeur de la classe mËre
 		super();
 		// initialise les nouveaux champs
 		_idTrace = 0;
@@ -42,9 +42,9 @@ public class PointDeTrace extends Point {
         _vitesse = 0;		
 	}
 	
-	// Constructeur avec 6 param√®tres
+	// Constructeur avec 6 paramËtres
 	public PointDeTrace(int idTrace, int id, double uneLatitude, double uneLongitude, double uneAltitude, Date uneDateHeure) {
-		// appelle le constructeur de la classe m√®re
+		// appelle le constructeur de la classe mËre
 		super(uneLatitude, uneLongitude, uneAltitude);
 		// initialise les nouveaux champs
 		_idTrace = idTrace;
@@ -56,9 +56,9 @@ public class PointDeTrace extends Point {
         _vitesse = 0;		
 	}
 	
-	// Constructeur avec 7 param√®tres
+	// Constructeur avec 7 paramËtres
     public PointDeTrace(int idTrace, int id, double uneLatitude, double uneLongitude, double uneAltitude, Date uneDateHeure, int unRythmeCardio) {
-		// appelle le constructeur de la classe m√®re
+		// appelle le constructeur de la classe mËre
 		super(uneLatitude, uneLongitude, uneAltitude);
 		// initialise les nouveaux champs
 		_idTrace = idTrace;
@@ -70,10 +70,10 @@ public class PointDeTrace extends Point {
         _vitesse = 0;
     }
     
-	// Constructeur avec 10 param√®tres
+	// Constructeur avec 10 paramËtres
     public PointDeTrace(int idTrace, int id, double uneLatitude, double uneLongitude, double uneAltitude, Date uneDateHeure, int unRythmeCardio,
         long unTempsCumule, double uneDistanceCumulee, double uneVitesse) {
-		// appelle le constructeur de la classe m√®re
+		// appelle le constructeur de la classe mËre
 		super(uneLatitude, uneLongitude, uneAltitude);
 		// initialise les nouveaux champs
 		_idTrace = idTrace;
@@ -87,7 +87,7 @@ public class PointDeTrace extends Point {
 
     // Constructeur par recopie (ou clonage) d'un point existant
     public PointDeTrace(PointDeTrace unPointExistant) {
-        // appelle le constructeur de la classe m√®re
+        // appelle le constructeur de la classe mËre
         super(unPointExistant.getLatitude(), unPointExistant.getLongitude(), unPointExistant.getAltitude());
         // initialise les nouveaux champs
 		_idTrace = unPointExistant._idTrace;
@@ -122,9 +122,9 @@ public class PointDeTrace extends Point {
     public double getVitesse() {return _vitesse;}
     public void setVitesse(double uneVitesse) {this._vitesse = uneVitesse;}
     
-	// M√©thodes publiques -------------------------------------------------------------------------
+	// MÈthodes publiques -------------------------------------------------------------------------
 
-    // M√©thode fournissant le temps cumul√© depuis le d√©part (sous la forme d'une chaine "00:00:00")
+    // MÈthode fournissant le temps cumulÈ depuis le dÈpart (sous la forme d'une chaine "00:00:00")
     public String getTempsCumuleEnChaine()
     {
         long duree = _tempsCumule;
@@ -136,7 +136,7 @@ public class PointDeTrace extends Point {
         return Outils.formaterNombre(heures, "00") + ":" + Outils.formaterNombre(minutes, "00") + ":" + Outils.formaterNombre(secondes, "00");
     }
     
-    // Fournit une chaine contenant toutes les donn√©es de l'objet
+    // Fournit une chaine contenant toutes les donnÈes de l'objet
 	public String toString()
 	{	String msg = "";
 		msg += "Id trace :\t" + Outils.formaterNombre(_idTrace, "0") + "\n";
@@ -145,9 +145,9 @@ public class PointDeTrace extends Point {
 		if (this._dateHeure != null)
 			msg += "Heure de passage :\t" + Outils.formaterDateHeureFR(this._dateHeure) + "\n";
         msg += "Rythme cardiaque :\t" + Outils.formaterNombre(_rythmeCardio, "0") + "\n";
-        msg += "Temps cumul√© (s) :\t" + Outils.formaterNombre(_tempsCumule, "0") + "\n";
-        msg += "Temps cumul√© (hh:mm:ss) :\t" + getTempsCumuleEnChaine() + "\n";
-        msg += "Distance cumul√©e (Km) :\t" + Outils.formaterNombre(_distanceCumulee, "000.000") + "\n";
+        msg += "Temps cumule (s) :\t" + Outils.formaterNombre(_tempsCumule, "0") + "\n";
+        msg += "Temps cumule (hh:mm:ss) :\t" + getTempsCumuleEnChaine() + "\n";
+        msg += "Distance cumulÈe (Km) :\t" + Outils.formaterNombre(_distanceCumulee, "000.000") + "\n";
         msg += "Vitesse (Km/h) :\t" + Outils.formaterNombre(_vitesse, "000.000") + "\n";		
 		return msg;
 	}	

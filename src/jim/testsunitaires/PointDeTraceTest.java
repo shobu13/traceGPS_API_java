@@ -125,9 +125,9 @@ public class PointDeTraceTest {
         msg += "Longitude :\t" + "000,000" + "\n";
         msg += "Altitude :\t" + "000,000" + "\n";
         msg += "Rythme cardiaque :\t" + "0" + "\n";
-        msg += "Temps cumulé (s) :\t" + "0" + "\n";
-        msg += "Temps cumulé (hh:mm:ss) :\t" + "00:00:00" + "\n";
-        msg += "Distance cumulée (Km) :\t" + "000,000" + "\n";
+        msg += "Temps cumule (s) :\t" + "0" + "\n";
+        msg += "Temps cumule (hh:mm:ss) :\t" + "00:00:00" + "\n";
+        msg += "Distance cumul�e (Km) :\t" + "000,000" + "\n";
         msg += "Vitesse (Km/h) :\t" + "000,000" + "\n";
 		assertEquals("Test toString", msg, point1.toString());
 		
@@ -138,9 +138,9 @@ public class PointDeTraceTest {
         msg += "Altitude :\t" + "100,500" + "\n";
         msg += "Heure de passage :\t" + "21/06/2016 14:30:20" + "\n";
         msg += "Rythme cardiaque :\t" + "140" + "\n";
-        msg += "Temps cumulé (s) :\t" + "3600" + "\n";
-        msg += "Temps cumulé (hh:mm:ss) :\t" + "01:00:00" + "\n";
-        msg += "Distance cumulée (Km) :\t" + "021,500" + "\n";
+        msg += "Temps cumule (s) :\t" + "3600" + "\n";
+        msg += "Temps cumule (hh:mm:ss) :\t" + "01:00:00" + "\n";
+        msg += "Distance cumul�e (Km) :\t" + "021,500" + "\n";
         msg += "Vitesse (Km/h) :\t" + "023,500" + "\n";
 		assertEquals("Test toString", msg, point5.toString());
 	}	

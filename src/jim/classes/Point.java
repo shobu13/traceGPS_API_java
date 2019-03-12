@@ -1,26 +1,26 @@
 package jim.classes;
 
-// Cette classe reprÃ©sente un point gÃ©ographique avec une latitude, une longitude et une altitude
-// DerniÃ¨re mise Ã  jour : 26/3/2018 par Jim
+// Cette classe représente un point géographique avec une latitude, une longitude et une altitude<br>
+// Dernière mise à jour : 22/1/2018 par Jim
 
 public class Point {
 	
-	// attributs privÃ©s ---------------------------------------------------------------------------
+	// attributs privés ---------------------------------------------------------------------------
 
-	private double _latitude;		// la latitude du point (en degrÃ©s dÃ©cimaux)
-	private double _longitude;		// la longitude du point (en degrÃ©s dÃ©cimaux)
-	private double _altitude;		// l'altitude du point (en mÃ¨tres)
+	private double _latitude;		// la latitude du point (en degrés décimaux)
+	private double _longitude;		// la longitude du point (en degrés décimaux)
+	private double _altitude;		// l'altitude du point (en mètres)
 	
 	// Constructeurs ------------------------------------------------------------------------------
 
-	// Constructeur sans paramÃ¨tre
+	// Constructeur sans paramètre
 	public Point() {
 		_latitude = 0;
 		_longitude = 0;
 		_altitude = 0;
 	}
 
-	// Constructeur avec paramÃ¨tres
+	// Constructeur avec paramètres
 	public Point(double uneLatitude, double uneLongitude, double uneAltitude) {
 		_latitude = uneLatitude;
 		_longitude = uneLongitude;
@@ -38,18 +38,18 @@ public class Point {
 	public double getAltitude() {return _altitude;}
 	public void setAltitude(double uneAltitude) {this._altitude = uneAltitude;}	
 	
-	// MÃ©thodes publiques -------------------------------------------------------------------------
+	// Méthodes publiques -------------------------------------------------------------------------
 	
-	// Calcul de la distance (en Km) entre 2 points gÃ©ographiques.<br>
-	// Ce code est transposÃ© du forum JavaScript suivant :<br>
+	// Calcul de la distance (en Km) entre 2 points géographiques.<br>
+	// Ce code est transposé du forum JavaScript suivant :<br>
 	// www.clubic.com/forum/programmation/calcul-de-distance-entre-deux-coordonnees-gps-id178494-page1.html<br>
 	// CETTE FONCTION EST A TESTER ABSOLUMENT<br>
 	// (on pourra par exemple utiliser le site http://www.lexilogos.com/calcul_distances.htm)
 	// 
-	// latitude1  : latitude point 1 (en degrÃ©s dÃ©cimaux)
-	// longitude1 : longitude point 1 (en degrÃ©s dÃ©cimaux)
-	// latitude2  : latitude point 2 (en degrÃ©s dÃ©cimaux)
-	// longitude2 : longitude point 2 (en degrÃ©s dÃ©cimaux)
+	// latitude1  : latitude point 1 (en degrés décimaux)
+	// longitude1 : longitude point 1 (en degrés décimaux)
+	// latitude2  : latitude point 2 (en degrés décimaux)
+	// longitude2 : longitude point 2 (en degrés décimaux)
 	// retourne   : la distance (en Km) entre les 2 points
 	private static double getDistanceBetween (double latitude1, double longitude1, double latitude2, double longitude2)
 	{
@@ -69,7 +69,7 @@ public class Point {
 		return (rad_dist * 3437.74677 * 1.1508) * 1.6093470878864446;		
 	}
 	
-	// Calcule et retourne la distance (en Km) entre l'instance (this) et le point gÃ©ographique autrePoint
+	// Calcule et retourne la distance (en Km) entre l'instance (this) et le point géographique autrePoint
 	public double getDistance (Point autrePoint) {
 		double lat1 = this._latitude;
 		double long1 = this._longitude;
@@ -79,7 +79,7 @@ public class Point {
 		return dist;
 	}
 	
-	// Calcule et retourne la distance (en Km) entre les 2 points gÃ©ographiques point1 et point2
+	// Calcule et retourne la distance (en Km) entre les 2 points géographiques point1 et point2
 	public static double getDistance (Point point1, Point point2) {
 		double lat1 = point1._latitude;
 		double long1 = point1._longitude;
@@ -89,7 +89,7 @@ public class Point {
 		return dist;
 	}
 	
-	// Fournit une chaine contenant toutes les donnÃ©es de l'objet
+	// Fournit une chaine contenant toutes les données de l'objet
 	public String toString()
 	{	String msg = "";
 		msg += "Latitude :\t" + Outils.formaterNombre(this._latitude, "000.000") + "\n";

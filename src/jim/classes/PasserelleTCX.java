@@ -1,7 +1,7 @@
 // Projet TraceGPS - API Java
 // Fichier : PasserelleTCX.java
-// Cette classe fournit les outils permettant de "parser" un fichier TCX pour mettre √† jour un objet Trace.<br>
-// Derni√®re mise √† jour : 26/3/2018 par Jim
+// Cette classe fournit les outils permettant de "parser" un fichier TCX pour mettre ‡ jour un objet Trace.<br>
+// DerniËre mise ‡ jour : 23/1/2018 par Jim
 
 package jim.classes;
 
@@ -14,20 +14,20 @@ import org.w3c.dom.NodeList;
 
 public class PasserelleTCX extends PasserelleFichierXML {
 
-	// m√©thode pour mettre √† jour un objet Trace (vide) √† partir n'un fichier TCX
-	// param√®tre nomFichier  : le nom du fichier contenant la trace
-	// param√®tre laTraceAmaj : l'objet Trace √† mettre √† jour
+	// mÈthode pour mettre ‡ jour un objet Trace (vide) ‡ partir n'un fichier TCX
+	// paramËtre nomFichier  : le nom du fichier contenant la trace
+	// paramËtre laTraceAmaj : l'objet Trace ‡ mettre ‡ jour
 	// retourne              : un message d'erreur de traitement (ou un message vide si pas d'erreur)
 	@Override
 	public String getUneTrace (String nomFichier, Trace laTraceAmaj) {
 		try {
-			// cr√©ation d'un flux en lecture (InputStream) √† partir du fichier
+			// crÈation d'un flux en lecture (InputStream) ‡ partir du fichier
 			InputStream unFluxEnLecture = getFluxEnLecture(nomFichier);
 			
-			// cr√©ation d'un objet org.w3c.dom.Document √† partir du flux ; il servira √† parcourir le flux XML
+			// crÈation d'un objet org.w3c.dom.Document ‡ partir du flux ; il servira ‡ parcourir le flux XML
 			Document leDocument = getDocumentXML(unFluxEnLecture);
 	
-			/* Exemple de donn√©es obtenues pour un point de trace :
+			/* Exemple de donnÈes obtenues pour un point de trace :
 						<Trackpoint>
 							<Time>2016-12-03T09:21:15Z</Time>
 							<Position>
@@ -47,23 +47,23 @@ public class PasserelleTCX extends PasserelleFichierXML {
 						</Trackpoint>
 			 */
 		
-			// cr√©ation d'une liste contenant tous les noeuds <Trackpoint> de l'√©l√©ment racine
+			// crÈation d'une liste contenant tous les noeuds <Trackpoint> de l'Èlement racine
 			NodeList lesNoeuds = leDocument.getElementsByTagName("Trackpoint");
 
 			// vide la liste actuelle des points de trace
 			laTraceAmaj.viderListePoints();
 			
-			// m√©moriser l'id de la trace
+			// mÈmoriser l'id de la trace
 			int idTrace = laTraceAmaj.getId();
 			// initialiser l'id des points
 			int idPoint = 0;
 
 			// parcours de la liste des noeuds <Trackpoint>
 			for (int i = 0 ; i <= lesNoeuds.getLength()-1 ; i++)
-			{	// cr√©ation de l'√©l√©ment courant √† chaque tour de boucle
+			{	// crÈation de l'Èlement courant ‡ chaque tour de boucle
 				Element unNoeud = (Element) lesNoeuds.item(i);
 				
-				// on v√©rifie que le noeud poss√®de toutes les balises
+				// on vÈrifie que le noeud possËde toutes les balises
 				if (unNoeud.getElementsByTagName("Time").getLength() > 0 &&
 				unNoeud.getElementsByTagName("LatitudeDegrees").getLength() > 0 &&
 				unNoeud.getElementsByTagName("LongitudeDegrees").getLength() > 0 &&
@@ -98,21 +98,21 @@ public class PasserelleTCX extends PasserelleFichierXML {
 					valeurNoeud = unNoeud.getElementsByTagName("Value").item(0).getTextContent();
 					int rythmeCardio = Integer.parseInt(valeurNoeud);
 					
-					// cr√©ation d'un point de trace
+					// crÈation d'un point de trace
 	                idPoint++;
 					PointDeTrace unNouveauPoint = new PointDeTrace(idTrace, idPoint, latitude, longitude, altitude, dateHeure, rythmeCardio);
 	
-					// ajoute le point √† l'objet laTraceAcreer
+					// ajoute le point ‡ l'objet laTraceAcreer
 					laTraceAmaj.ajouterPoint(unNouveauPoint);
 				}
 			}
             // ferme le flux  en lecture
             unFluxEnLecture.close();
 			
-			return "";						// il n'y a pas de probl√®me
+			return "";						// il n'y a pas de problËme
 		}
 		catch (Exception ex)
-		{	return "Erreur : " + ex.getMessage();	// il y a un probl√®me
+		{	return "Erreur : " + ex.getMessage();	// il y a un problËme
 		}
 	}
 }

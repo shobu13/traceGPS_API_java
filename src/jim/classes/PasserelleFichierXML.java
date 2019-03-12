@@ -1,15 +1,15 @@
 // Projet TraceGPS - API Java
 // Fichier : PasserelleFichier.java
-// Cette classe abstraite hÃ©rite de la classe Passerelle
-// Elle prÃ©cise la signature de la mÃ©thode pour "parser" un fichier GPS afin de mettre Ã  jour un objet Trace fourni en paramÃ¨tre.
-// DerniÃ¨re mise Ã  jour : 26/3/2018 par Jim
+// Cette classe abstraite hérite de la classe Passerelle
+// Elle précise la signature de la méthode pour "parser" un fichier GPS afin de mettre à jour un objet Trace fourni en paramètre.
+// Dernière mise à jour : 23/1/2018 par Jim
 
 package jim.classes;
 
 public abstract class PasserelleFichierXML extends PasserelleXML {
 	
-	// mÃ©thode abstraite pour mettre Ã  jour un objet Trace (vide) Ã  partir d'un fichier GPS
-	// paramÃ¨tre nomFichier  : le nom du fichier contenant la trace
-	// paramÃ¨tre laTraceAmaj : l'objet Trace Ã  mettre Ã  jour
+	// méthode abstraite pour mettre à jour un objet Trace (vide) à partir d'un fichier GPS
+	// paramètre nomFichier  : le nom du fichier contenant la trace
+	// paramètre laTraceAmaj : l'objet Trace à mettre à jour
 	public abstract String getUneTrace(String nomFichier, Trace laTraceAmaj);
 }

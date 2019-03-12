@@ -3,56 +3,42 @@ package jim.classes;
 import java.util.ArrayList;
 import java.util.Date;
 
-// Cette classe reprÃ©sente une trace au moyen d'une collection d'objets PointDeTrace<br>
-// DerniÃ¨re mise Ã  jour : 29/4/2018 par Jim
+// Cette classe représente une trace au moyen d'une collection d'objets PointDeTrace<br>
+// Dernière mise à jour : 22/1/2018 par Jim
 
 public class Trace {
 
-	// attributs privÃ©s ---------------------------------------------------------------------------
+	// attributs privés ---------------------------------------------------------------------------
 
 	private int _id;				// l'identifiant de la trace
-	private Date _dateHeureDebut;	// date et heure de dÃ©but (utilise un objet java.util.Date)
+	private Date _dateHeureDebut;	// date et heure de début (utilise un objet java.util.Date)
 	private Date _dateHeureFin;		// date et heure de fin (utilise un objet java.util.Date)
-	private boolean _terminee;		// true si la trace est terminÃ©e, false sinon
-	private int _idUtilisateur;		// l'identifiant de l'utilisateur ayant crÃ©Ã© la trace
-	private double _distance;		// la distance totale
+	private boolean _terminee;		// true si la trace est terminée, false sinon
+	private int _idUtilisateur;		// l'identifiant de l'utilisateur ayant créé la trace
 	private ArrayList<PointDeTrace> _lesPointsDeTrace;	// la collection d'objets PointDeTrace
 	
 	// Constructeurs ------------------------------------------------------------------------------
 
-	// Constructeur sans paramÃ¨tre
+	// Constructeur sans paramètre
 	public Trace() {
 		_id = 0;
 		_dateHeureDebut = null;
 		_dateHeureFin = null;
 		_terminee = false;
 		_idUtilisateur = 0;
-		_distance = 0;
 		_lesPointsDeTrace = new ArrayList<PointDeTrace>();
 	}
 
-	// Constructeur avec 5 paramÃ¨tres
+	// Constructeur avec paramètres
 	public Trace(int unId, Date uneDateHeureDebut, Date uneDateHeureFin, boolean terminee, int unIdUtilisateur) {
 		_id = unId;
 		_dateHeureDebut = uneDateHeureDebut;
 		_dateHeureFin = uneDateHeureFin;
 		_terminee = terminee;
 		_idUtilisateur = unIdUtilisateur;
-		_distance = 0;
 		_lesPointsDeTrace = new ArrayList<PointDeTrace>();
 	}
-
-	// Constructeur avec 6 paramÃ¨tres
-	public Trace(int unId, Date uneDateHeureDebut, Date uneDateHeureFin, boolean terminee, int unIdUtilisateur, double uneDistance) {
-		_id = unId;
-		_dateHeureDebut = uneDateHeureDebut;
-		_dateHeureFin = uneDateHeureFin;
-		_terminee = terminee;
-		_idUtilisateur = unIdUtilisateur;
-		_distance = uneDistance;
-		_lesPointsDeTrace = new ArrayList<PointDeTrace>();
-	}
-
+	
 	// Accesseurs ---------------------------------------------------------------------------------
 
     public int getId() {return _id;}
@@ -72,7 +58,7 @@ public class Trace {
 	
 	public ArrayList<PointDeTrace> getLesPointsDeTrace() {return _lesPointsDeTrace;}
 
-	// MÃ©thodes publiques -------------------------------------------------------------------------
+	// Méthodes publiques -------------------------------------------------------------------------
 
 	// Fournit le nombre de points de passage
 	public int getNombrePoints() {
@@ -84,13 +70,13 @@ public class Trace {
 		if (_lesPointsDeTrace.size() == 0)
 			return null;
 		else {
-			// au dÃ©part, les valeurs extrÃªmes sont celles du premier point
+			// au départ, les valeurs extrêmes sont celles du premier point
 			PointDeTrace premierPoint = _lesPointsDeTrace.get(0);
 			double latMini = premierPoint.getLatitude();
 			double latMaxi = premierPoint.getLatitude();
 			double longMini = premierPoint.getLongitude();
 			double longMaxi = premierPoint.getLongitude();
-			// parcours des autres points (Ã  partir de la position 1)
+			// parcours des autres points (à partir de la position 1)
 			for (int i = 1 ; i < _lesPointsDeTrace.size(); i++) {
 				PointDeTrace lePoint = _lesPointsDeTrace.get(i);
 				if (lePoint.getLatitude() < latMini) latMini = lePoint.getLatitude();
@@ -105,16 +91,16 @@ public class Trace {
 		}
 	}
 
-	// Fournit le dÃ©nivelÃ© (en m) entre le point le plus bas et le point le plus haut du parcours
+	// Fournit le dénivelé (en m) entre le point le plus bas et le point le plus haut du parcours
 	public double getDenivele() {
 		if (_lesPointsDeTrace.size() == 0)
 			return 0;
 		else {
-			// au dÃ©part, les valeurs extrÃªmes sont celles du premier point
+			// au départ, les valeurs extrêmes sont celles du premier point
 			PointDeTrace premierPoint = _lesPointsDeTrace.get(0);
 			double altMini = premierPoint.getAltitude();
 			double altMaxi = premierPoint.getAltitude();
-			// parcours des autres points (Ã partir de la position 1)
+			// parcours des autres points (à partir de la position 1)
 			for (int i = 1 ; i < _lesPointsDeTrace.size(); i++) {
 				PointDeTrace lePoint = _lesPointsDeTrace.get(i);
 				if (lePoint.getAltitude() < altMini) altMini = lePoint.getAltitude();
@@ -125,7 +111,7 @@ public class Trace {
 		}
 	}
 	
-	// Fournit la durÃ©e totale du parcours (en secondes)
+	// Fournit la durée totale du parcours (en secondes)
 	public long getDureeEnSecondes() {
 		if (_lesPointsDeTrace.size() == 0)
 			return 0;
@@ -136,7 +122,7 @@ public class Trace {
 		}
 	}
 	
-	// Fournit la durÃ©e totale du parcours sous forme d'une chaine "hh:mm:ss"
+	// Fournit la durée totale du parcours sous forme d'une chaine "hh:mm:ss"
 	public String getDureeTotale() {
 		long duree = getDureeEnSecondes();
 		if (duree == 0) {
@@ -153,8 +139,6 @@ public class Trace {
 	
 	// Fournit la distance totale du parcours (en Km)
 	public double getDistanceTotale() {
-		if (_distance > 0) return _distance;
-
 		if (_lesPointsDeTrace.size() == 0)
 			return 0;
 		else {
@@ -164,7 +148,7 @@ public class Trace {
 		}
 	}
 	
-	// Fournit le dÃ©nivelÃ© positif (en m)
+	// Fournit le dénivelé positif (en m)
     public double getDenivelePositif()
     {
         double denivele = 0;
@@ -173,14 +157,14 @@ public class Trace {
         {
             PointDeTrace lePoint1 = (PointDeTrace)_lesPointsDeTrace.get(i);
             PointDeTrace lePoint2 = (PointDeTrace)_lesPointsDeTrace.get(i + 1);
-            // on teste si Ã§a monte
+            // on teste si ça monte
             if ( lePoint2.getAltitude() > lePoint1.getAltitude() )
                 denivele += lePoint2.getAltitude() - lePoint1.getAltitude();
         }
         return denivele;
     }
 
-    // Fournit le dÃ©nivelÃ© nÃ©gatif (en m)
+    // Fournit le dénivelé négatif (en m)
     public double getDeniveleNegatif()
     {
         double denivele = 0;
@@ -189,7 +173,7 @@ public class Trace {
         {
             PointDeTrace lePoint1 = (PointDeTrace)_lesPointsDeTrace.get(i);
             PointDeTrace lePoint2 = (PointDeTrace)_lesPointsDeTrace.get(i + 1);
-            // on teste si Ã§a descend
+            // on teste si ça descend
             if (lePoint2.getAltitude() < lePoint1.getAltitude())
                 denivele += lePoint1.getAltitude() - lePoint2.getAltitude();
         }
@@ -206,22 +190,22 @@ public class Trace {
 		}
 	}
 	
-	// Fournit une chaine contenant toutes les donnÃ©es de l'objet
+	// Fournit une chaine contenant toutes les données de l'objet
 	public String toString() {
 		String msg = "";
         msg += "Id : \t\t\t\t" + getId() + "\n";
         msg += "Utilisateur : \t\t\t" + getIdUtilisateur() + "\n";
-        if (getDateHeureDebut() != null) msg += "Heure de dÃ©but :\t\t" + Outils.formaterDateHeureFR(getDateHeureDebut()) + "\n";
+        if (getDateHeureDebut() != null) msg += "Heure de début :\t\t" + Outils.formaterDateHeureFR(getDateHeureDebut()) + "\n";
         if (getDateHeureFin() != null) msg += "Heure de fin :\t\t\t" + Outils.formaterDateHeureFR(getDateHeureFin()) + "\n";
-        if (getTerminee()) msg += "TerminÃ©e : \t\t\tOui \n"; else msg += "TerminÃ©e : \t\t\tNon \n";
+        if (getTerminee()) msg += "Terminée : \t\t\tOui \n"; else msg += "Terminée : \t\t\tNon \n";
 		msg += "Nombre de points :\t\t" + Outils.formaterNombre(getNombrePoints(), "00000") + "\n";
 		if (getNombrePoints() > 0) {
-			msg += "DurÃ©e en secondes :\t\t" + getDureeEnSecondes() + "\n";
-			msg += "DurÃ©e totale :\t\t\t" + getDureeTotale() + "\n";
+			msg += "Durée en secondes :\t\t" + getDureeEnSecondes() + "\n";
+			msg += "Durée totale :\t\t\t" + getDureeTotale() + "\n";
 			msg += "Distance totale en Km :\t\t" + Outils.formaterNombre(getDistanceTotale(), "000.00") + "\n";
-			msg += "DÃ©nivelÃ© en m :\t\t\t" + Outils.formaterNombre(getDenivele(), "0000.00") + "\n";
-            msg += "DÃ©nivelÃ© positif en m :\t\t" + Outils.formaterNombre(getDenivelePositif(), "0000.00") + "\n";
-            msg += "DÃ©nivelÃ© nÃ©gatif en m :\t\t" + Outils.formaterNombre(getDeniveleNegatif(), "0000.00") + "\n";
+			msg += "Dénivelé en m :\t\t\t" + Outils.formaterNombre(getDenivele(), "0000.00") + "\n";
+            msg += "Dénivelé positif en m :\t\t" + Outils.formaterNombre(getDenivelePositif(), "0000.00") + "\n";
+            msg += "Dénivelé négatif en m :\t\t" + Outils.formaterNombre(getDeniveleNegatif(), "0000.00") + "\n";
 			msg += "Vitesse moyenne en Km/h :\t" + Outils.formaterNombre(getVitesseMoyenne() , "00.00") + "\n";
 			msg += "Centre du parcours :\n";
             msg += "   - Latitude :\t\t\t" + Outils.formaterNombre(getCentre().getLatitude(), "000.000") + "\n";
@@ -231,16 +215,16 @@ public class Trace {
 		return msg;
 	}
 	
-	// ajoute un objet PointDeTrace Ã  la collection
+	// ajoute un objet PointDeTrace à la collection
 	public void ajouterPoint(PointDeTrace unPoint) {
         if (_lesPointsDeTrace.size() == 0)
-        {   // si premier point de la trace, mise Ã  zÃ©ro des donnÃ©es cumulÃ©es et de la vitesse
+        {   // si premier point de la trace, mise à zéro des données cumulées et de la vitesse
             unPoint.setTempsCumule(0);
             unPoint.setDistanceCumulee(0);
             unPoint.setVitesse(0);
         }
         else
-        {   // si dÃ©jÃ  d'autres points dans la trace, on cumule la durÃ©e et la distance avec celle du dernier point stockÃ©
+        {   // si déjà d'autres points dans la trace, on cumule la durée et la distance avec celle du dernier point stocké
             PointDeTrace dernierPoint = (PointDeTrace) _lesPointsDeTrace.get(_lesPointsDeTrace.size()-1);
 
             long duree = (unPoint.getDateHeure().getTime() - dernierPoint.getDateHeure().getTime()) / 1000;		// en sec
@@ -249,14 +233,14 @@ public class Trace {
             double distance = Point.getDistance(dernierPoint, unPoint);
             unPoint.setDistanceCumulee(dernierPoint.getDistanceCumulee() + distance);
 
-            // calcul de la vitesse entre l'avant-dernier point et le point Ã  ajouter
-            if (_lesPointsDeTrace.size() >= 1)   // il faut au moins 1 point prÃ©cÃ©dent
+            // calcul de la vitesse entre l'avant-dernier point et le point à ajouter
+            if (_lesPointsDeTrace.size() >= 1)   // il faut au moins 1 point précédent
             {
-                // distance et durÃ©e entre le dernier point et le nouveau point Ã  ajouter
+                // distance et durée entre le dernier point et le nouveau point à ajouter
                 distance = Point.getDistance(dernierPoint, unPoint);
                 duree = (unPoint.getDateHeure().getTime() - dernierPoint.getDateHeure().getTime()) / 1000;	// en sec
                 double vitesse = distance / (double) duree * 3600;
-                // on affecte la vitesse calculÃ©e au nouveau point
+                // on affecte la vitesse calculée au nouveau point
                 unPoint.setVitesse(vitesse);
             }
         }
@@ -268,7 +252,7 @@ public class Trace {
 		_lesPointsDeTrace.clear();
 	}
 
-	// lisse les donnÃ©es (altitude surtout)
+	// lisse les données (altitude surtout)
     public Trace lisserDonnees()
     {
         Trace laTraceLissee = new Trace();

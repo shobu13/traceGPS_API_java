@@ -1,7 +1,7 @@
 // Projet TraceGPS - API Java
 // Fichier : PasserelleGPX.java
-// Cette classe fournit les outils permettant de "parser" un fichier GPX pour mettre √† jour un objet Trace.<br>
-// Derni√®re mise √† jour : 26/3/2018 par Jim
+// Cette classe fournit les outils permettant de "parser" un fichier GPX pour mettre ‡ jour un objet Trace.<br>
+// DerniËre mise ‡ jour : 23/1/2018 par Jim
 
 package jim.classes;
 
@@ -14,23 +14,23 @@ import org.w3c.dom.NodeList;
 
 public class PasserelleGPX extends PasserelleFichierXML {
 	
-	// m√©thode pour mettre √† jour un objet Trace (vide) √† partir n'un fichier GPX
-	// param√®tre nomFichier  : le nom du fichier contenant la trace
-	// param√®tre laTraceAmaj : l'objet Trace √† mettre √† jour
+	// mÈthode pour mettre ‡ jour un objet Trace (vide) ‡ partir n'un fichier GPX
+	// paramËtre nomFichier  : le nom du fichier contenant la trace
+	// paramËtre laTraceAmaj : l'objet Trace ‡ mettre ‡ jour
 	// retourne              : un message d'erreur de traitement (ou un message vide si pas d'erreur)
 	@Override
 	public String getUneTrace (String nomFichier, Trace laTraceAmaj) {
 		try {
-			// cr√©ation d'un flux en lecture (InputStream) √† partir du fichier
+			// crÈation d'un flux en lecture (InputStream) ‡ partir du fichier
 			InputStream unFluxEnLecture = getFluxEnLecture(nomFichier);
 			
-			// cr√©ation d'un objet org.w3c.dom.Document √† partir du flux ; il servira √† parcourir le flux XML
+			// crÈation d'un objet org.w3c.dom.Document ‡ partir du flux ; il servira ‡ parcourir le flux XML
 			Document leDocument = getDocumentXML(unFluxEnLecture);
 
             // ferme le flux  en lecture
             unFluxEnLecture.close();
             
-			/* Exemple de donn√©es obtenues pour un point de trace :
+			/* Exemple de donnÈes obtenues pour un point de trace :
                     <trkpt lat="48.140161" lon="-1.667260">
                         <ele>83.32</ele>
                         <time>2015-09-13T09:08:00Z</time>
@@ -55,23 +55,23 @@ public class PasserelleGPX extends PasserelleFichierXML {
                     </trkpt>
 			 */
 		
-			// cr√©ation d'une liste contenant tous les noeuds <trkpt> de l'√©l√©ment racine
+			// crÈation d'une liste contenant tous les noeuds <trkpt> de l'Èlement racine
 			NodeList lesNoeuds = leDocument.getElementsByTagName("trkpt");
 
 			// vide la liste actuelle des points de trace
 			laTraceAmaj.viderListePoints();
 
-			// m√©moriser l'id de la trace
+			// mÈmoriser l'id de la trace
 			int idTrace = laTraceAmaj.getId();
 			// initialiser l'id des points
 			int idPoint = 0;
 			
 			// parcours de la liste des noeuds <trkpt>
 			for (int i = 0 ; i <= lesNoeuds.getLength()-1 ; i++)
-			{	// cr√©ation de l'√©l√©ment courant √† chaque tour de boucle
+			{	// crÈation de l'Èlement courant ‡ chaque tour de boucle
 				Element unNoeud = (Element) lesNoeuds.item(i);
 				
-				// on v√©rifie que le noeud poss√®de toutes les balises
+				// on vÈrifie que le noeud possËde toutes les balises
 				if (unNoeud.getElementsByTagName("ele").getLength() > 0 &&
 				unNoeud.getElementsByTagName("time").getLength() > 0 &&
 				unNoeud.getElementsByTagName("gpxtpx:hr").getLength() > 0 ) 
@@ -99,7 +99,7 @@ public class PasserelleGPX extends PasserelleFichierXML {
 					Date dateHeure = Outils.convertirEnDateHeure(chaineDateHeure);
 					
 	                // recherche du rythme cardiaque
-	                // le rythme cardiaque est mis √† 0 si la balise <gpxtpx:hr> n'est pas pr√©sente dans le sch√©ma
+	                // le rythme cardiaque est mis ‡ 0 si la balise <gpxtpx:hr> n'est pas prÈsente dans le schÈma
 	                int rythmeCardio = 0;
 	                if (unNoeud.getElementsByTagName("gpxtpx:hr").getLength() > 0)
 	                {  	// lecture de la balise <gpxtpx:hr>
@@ -107,21 +107,21 @@ public class PasserelleGPX extends PasserelleFichierXML {
 	    				rythmeCardio = Integer.parseInt(valeurNoeud);
 	                }				
 					
-					// cr√©ation d'un point de trace
+					// crÈation d'un point de trace
 	                idPoint++;
 					PointDeTrace unNouveauPoint = new PointDeTrace(idTrace, idPoint, latitude, longitude, altitude, dateHeure, rythmeCardio);
 	
-					// ajoute le point √† l'objet laTraceAcreer
+					// ajoute le point ‡ l'objet laTraceAcreer
 					laTraceAmaj.ajouterPoint(unNouveauPoint);
 				}
 			}
             // ferme le flux  en lecture
             unFluxEnLecture.close();
 			
-			return "";						// il n'y a pas de probl√®me
+			return "";						// il n'y a pas de problËme
 		}
 		catch (Exception ex)
-		{	return "Erreur : " + ex.getMessage();	// il y a un probl√®me
+		{	return "Erreur : " + ex.getMessage();	// il y a un problËme
 		}
 	}
 

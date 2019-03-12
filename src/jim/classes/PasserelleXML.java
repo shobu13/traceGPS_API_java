@@ -1,7 +1,7 @@
 // Projet TraceGPS - API Java
 // Fichier : Passerelle.java
-// Cette classe abstraite fournit les outils permettant d'obtenir un document XML Ã  partir d'un fichier ou d'un service web
-// DerniÃ¨re mise Ã  jour : 26/3/2018 par Jim
+// Cette classe abstraite fournit les outils permettant d'obtenir un document XML à partir d'un fichier ou d'un service web
+// Dernière mise à jour : 23/1/2018 par Jim
 
 package jim.classes;
 
@@ -20,8 +20,8 @@ import org.w3c.dom.Document;
 
 public abstract class PasserelleXML {
 
-    // mÃ©thode protÃ©gÃ©e statique pour obtenir un flux en lecture (java.io.InputStream)
-    // Ã  partir de l'adresse d'un fichier ou de l'URL d'un service web
+    // méthode protégée statique pour obtenir un flux en lecture (java.io.InputStream)
+    // à partir de l'adresse d'un fichier ou de l'URL d'un service web
     protected static InputStream getFluxEnLecture(String adrFichierOuServiceWeb)
     {
 		InputStream unFluxEnLecture;
@@ -32,12 +32,12 @@ public abstract class PasserelleXML {
 				URL url = new URL(adrFichierOuServiceWeb);
 				HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
-				// rÃ©cupÃ©ration de la rÃ©ponse dans un flux en lecture (InputStream)
+				// récupération de la réponse dans un flux en lecture (InputStream)
 				unFluxEnLecture = new BufferedInputStream(urlConnection.getInputStream());
 
 			}
 			else
-			{	// crÃ©ation d'un flux en lecture (InputStream) depuis le fichier
+			{	// création d'un flux en lecture (InputStream) depuis le fichier
 				unFluxEnLecture = new FileInputStream(new File(adrFichierOuServiceWeb));
 			}
 			return unFluxEnLecture;
@@ -47,17 +47,17 @@ public abstract class PasserelleXML {
 		}	
     }
 
-    // mÃ©thode protÃ©gÃ©e statique pour obtenir document XML (org.w3c.dom.Document)
-    // Ã  partir d'un flux de donnÃ©es en lecture (java.io.InputStream)
+    // méthode protégée statique pour obtenir document XML (org.w3c.dom.Document)
+    // à partir d'un flux de données en lecture (java.io.InputStream)
 	protected static Document getDocumentXML(InputStream unFluxEnLecture)
 	{
 		try
 		{
-			// crÃ©ation d'une instance de DocumentBuilderFactory et DocumentBuilder
+			// création d'une instance de DocumentBuilderFactory et DocumentBuilder
 			DocumentBuilderFactory leDBF = DocumentBuilderFactory.newInstance();
 			DocumentBuilder leDB = leDBF.newDocumentBuilder();
 	
-			// on crÃ©e un nouveau document XML avec en argument le flux XML
+			// on crée un nouveau document XML avec en argument le flux XML
 			Document leDocument = leDB.parse(unFluxEnLecture);
 			return leDocument;
 		}
